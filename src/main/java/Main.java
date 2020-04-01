@@ -1,21 +1,23 @@
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Todo> todosList = new ArrayList<>();
+        HashMap<String, Todo> todosMap = new HashMap<>();
 
-        String[] filename = new String[]{args.length > 0 ? args[0] : "todo-list.json"};
+        String[] file = new String[]{args.length > 0 ? args[0] : "todo-list.json"};
+        String filename = file[0];
         System.out.println();
         System.out.println("Введите help для помощи");
         try {
-            todosList = TodoManager.readFromFile(filename[0]);
+            todosMap = TodoIO.readFromFile(filename);
         } catch (NullPointerException np) {
             System.out.println("Выбранный файл не должен содержать null, все поля должны быть заполнены");
         } catch (AccessDeniedException permDenied) {
@@ -28,8 +30,23 @@ public class Main {
             System.out.println("Ошибка чтения JSON, проверьте правильность формата данных");
         }
 
-        System.out.println(todosList);
-
+        do {
+            try {
+                String[] userCommand = Util.parseUserInput();
+                String commandItself = userCommand[0];
+                String commandArg = userCommand[1];
+                switch (commandItself.toLowerCase()) {
+                    case "add_todo":
+                        TodoManager.addTodo(todosMap,filename,commandArg);
+                    break;
+                }
+            } catch (IOException ioEx) {
+                System.out.println("IOException");
+            } catch (JsonSyntaxException jsonEx) {
+                System.out.println("Ошибка синтаксиса JSON");
+            }
+        } while (true);
     }
 
 }
+

@@ -1,26 +1,36 @@
 import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class TodoManager {
 
-    public static ArrayList<Todo> readFromFile(String filename) throws IOException, NullPointerException, JsonParseException {
-        InputStream inputStream = new FileInputStream(filename);
-        Reader inputStreamReader = new InputStreamReader(inputStream);
-        BufferedReader reader = new BufferedReader(inputStreamReader);
+   public static void addTodo(HashMap<String,Todo> todosMap, String filename, String commandArg) throws IOException {
         Gson gson = new Gson();
-        ArrayList<Todo> todosList = gson.fromJson(reader, new TypeToken<ArrayList<Todo>>() {}.getType());
-        inputStreamReader.close();
-        for (Todo todo: todosList) {
-            if (todo.getTitle() == null || todo.getTaskDescription() == null) {
-                throw new NullPointerException();
+        Todo todo = gson.fromJson(commandArg, Todo.class);
+        if (todo.getTitle() != null && todo.getTaskDescription()!= null) {
+            if (todosMap.containsKey(todo.getTitle())) {
+                System.out.println("Дело с таким заголовком уже существует. Перезаписать его? (введите yes, если да, иначе - отмена  )");
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                String choice = br.readLine();
+                if (choice.trim().toLowerCase().equals("yes")) {
+                    todosMap.put(todo.getTitle(), todo);
+                    System.out.println("Добавлено");
+                } else {
+                    System.out.println("Не перезаписано");
+                }
+            } else {
+                todosMap.put(todo.getTitle(), todo);
+                System.out.println("Добавлено");
             }
+        } else {
+            System.out.println("Не удалось добавить, все поля должны быть заполнены");
         }
-        return todosList;
+        try {
+            TodoIO.writeToFile(todosMap, filename);
+        } catch (IOException x) {
+            System.out.println("Не удается сохранить изменения в файл (IOException)");
+        }
     }
 
 }
-
