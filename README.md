@@ -1,1 +1,2 @@
-# Todo-management-utility. Task for JetBrains internship application
+# Todo-management-utility 
+Task for JetBrains internship application
