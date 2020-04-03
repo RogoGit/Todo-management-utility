@@ -48,4 +48,19 @@ public class TodoManager {
         sortedTodosMap.forEach((key,value) -> System.out.println(value.toString()));
     }
 
+    public static void showHelp() {
+       System.out.println("help - Инструкция к использованию программы, список возможных команд");
+       System.out.println("list - Показать список всех дел");
+       System.out.println("add_todo {todo} - Добавить новое дело (задается в формате JSON, поддерживается многострочный ввод)");
+       System.out.println("list_by_completion true/fasle - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
+       System.out.println("list_by_priority low/medium/high - Показать список всех дел с указанным приоритетом");
+       System.out.println("remove_todo title- Удалить дело по его заголовку");
+       System.out.println("remove_all - Удалить все дела безвозвратно");
+       System.out.println("mark_done title - Обозначить дело как выполненное");
+       System.out.println("mark_undone title - Обозначить дело как невыполненное");
+       System.out.println("set_priority title low/medium/high - Поставить заданный приоритет выбранному делу");
+       System.out.println("save - Сохранить список дел (сохранение также будет произведено автоматически при выходе из программы)");
+       System.out.println("exit - Выход из программы");
+    }
+
 }

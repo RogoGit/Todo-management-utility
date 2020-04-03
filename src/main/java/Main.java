@@ -30,6 +30,8 @@ public class Main {
             System.out.println("Ошибка чтения JSON, проверьте правильность формата данных");
         }
 
+        TodoManager.showHelp();
+
         do {
             try {
                 String[] userCommand = Util.parseUserInput();

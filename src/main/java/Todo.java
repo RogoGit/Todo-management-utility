@@ -42,7 +42,19 @@ public class Todo implements Comparable<Todo> {
 
     @Override
     public String toString() {
-        return "title " + this.getTitle() + " taskDescription " + this.getTaskDescription();
+        String priorStatus;
+        if (this.getPriority().equals(TodoPriority.LOW)) {
+            priorStatus = "НИЗКИЙ";
+        } else if (this.getPriority().equals(TodoPriority.MEDIUM)) {
+            priorStatus = "СРЕДНИЙ";
+        } else {
+            priorStatus = "ВЫСОКИЙ";
+        }
+        String isDoneStatus = this.getIsDone() ? "сделано" : "не сделано";
+        return "--------------------------------\n" +
+                 this.getTitle() + " - " +  isDoneStatus + "\n" +
+                "Описание: " + this.getTaskDescription() + "\n" +
+                "Приоритет: " + priorStatus + "\n";
     }
 
     private enum TodoPriority {
