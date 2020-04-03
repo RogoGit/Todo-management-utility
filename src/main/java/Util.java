@@ -14,7 +14,8 @@ public class Util {
         do {
             lineOfInput = br.readLine();
             inputs.add(lineOfInput);
-            if ((lineOfInput.trim().toLowerCase().equals("help")) || (lineOfInput.trim().toLowerCase().equals("save")) || (lineOfInput.trim().toLowerCase().equals("exit"))) {
+            if ((lineOfInput.trim().toLowerCase().equals("help")) || (lineOfInput.trim().toLowerCase().equals("list"))
+                    || (lineOfInput.trim().toLowerCase().equals("save")) || (lineOfInput.trim().toLowerCase().equals("exit"))) {
                 break;
             }
             if (lineOfInput.contains("{")) {
@@ -41,18 +42,17 @@ public class Util {
         StringBuilder sb = new StringBuilder();
         int i = 0;
         for (String s : inputs) {
-            if (!(s.trim().toLowerCase().equals("end"))) {
-                if (((s.trim().startsWith("{"))) && (i == 0)) {
-                    sb.append(" " + s.trim());
-                    i++;
-                } else sb.append(s.trim());
-            }
+            if (((s.trim().startsWith("{"))) && (i == 0)) {
+                sb.append(" " + s.trim());
+                i++;
+            } else sb.append(s.trim());
             if ((s.endsWith("}")) && (i != 0)) {
                 sb.append(" ");
             }
         }
         String command = sb.toString();
-        if (!((command.toLowerCase().equals("help")) || (command.toLowerCase().equals("save")) || (command.toLowerCase().equals("exit")))) {
+        if (!((command.toLowerCase().equals("help")) || (lineOfInput.trim().toLowerCase().equals("list"))
+                || (command.toLowerCase().equals("save")) || (command.toLowerCase().equals("exit")))) {
             System.out.println(command);
         }
         String commandParts[] = command.replaceAll(" ", "").split("\\{");

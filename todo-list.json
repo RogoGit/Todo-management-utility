@@ -1,18 +1,32 @@
 [
   {
-    "title": "a",
-    "taskDescription": "sdsa"
-  },
-  {
     "title": "task1",
-    "taskDescription": "this is first user task"
+    "taskDescription": "description 1",
+    "isDone": false,
+    "priority": "HIGH"
   },
   {
     "title": "task2",
-    "taskDescription": "this is second user task"
+    "taskDescription": "description 2",
+    "isDone": false,
+    "priority": "LOW"
   },
   {
     "title": "task3",
-    "taskDescription": "hisistask"
+    "taskDescription": "description 3",
+    "isDone": false,
+    "priority": "MEDIUM"
+  },
+  {
+    "title": "task4",
+    "taskDescription": "description 4",
+    "isDone": true,
+    "priority": "HIGH"
+  },
+  {
+    "title": "task5",
+    "taskDescription": "description 5",
+    "isDone": false,
+    "priority": "MEDIUM"
   }
 ]

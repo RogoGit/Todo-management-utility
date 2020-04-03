@@ -8,21 +8,21 @@ import java.io.*;
 
 public class TodoIO {
 
-    public static HashMap<String, Todo> readFromFile(String filename) throws IOException, NullPointerException, JsonParseException {
+    public static TreeMap<String, Todo> readFromFile(String filename) throws IOException, NullPointerException, JsonParseException {
         InputStream inputStream = new FileInputStream(filename);
         Reader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader reader = new BufferedReader(inputStreamReader);
         Gson gson = new Gson();
         ArrayList<Todo> todosList = gson.fromJson(reader, new TypeToken<ArrayList<Todo>>() {}.getType());
         inputStreamReader.close();
-        HashMap<String, Todo> todosMap = new HashMap<>();
+        TreeMap<String, Todo> todosMap = new TreeMap<>();
         for (Todo todo: todosList) {
             todosMap.put(todo.getTitle(), todo);
         }
         return todosMap;
     }
 
-    public static void writeToFile(HashMap<String,Todo> todosMap, String filename) throws IOException {
+    public static void writeToFile(TreeMap<String,Todo> todosMap, String filename) throws IOException {
         OutputStream outputStream = new FileOutputStream(filename);
         Writer outputStreamWriter = new OutputStreamWriter(outputStream);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
