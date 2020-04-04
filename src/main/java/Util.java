@@ -8,7 +8,10 @@ public class Util {
         System.out.println();
         String[] commandNotFound = {""};
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String command = br.readLine();
+        String command;
+        do {
+            command = br.readLine();
+        } while (command.equals(""));
         if (command.startsWith("list_")) {
             return command.split(" ");
         }

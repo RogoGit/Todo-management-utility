@@ -98,8 +98,12 @@ public class TodoManager {
 
     public static void removeTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        String title = commandArgs[0];
-       todosMap.entrySet().removeIf(entry -> entry.getKey().equals(title));
-       System.out.println("Дело \"" + title + "\" успешно удалено");
+       if (todosMap.containsKey(title)) {
+           todosMap.entrySet().removeIf(entry -> entry.getKey().equals(title));
+           System.out.println("Дело \"" + title + "\" успешно удалено");
+       } else {
+           System.out.println("Нет дела с заданным заголовком");
+       }
     }
 
     public static void removeAll(TreeMap<String,Todo> todosMap) {
