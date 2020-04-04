@@ -40,10 +40,25 @@ public class Main {
                 if (userCommand.length > 1) commandArg = userCommand[1];
                 switch (commandItself.toLowerCase()) {
                     case "add_todo":
-                        TodoManager.addTodo(todosMap,filename,commandArg);
+                        TodoManager.addTodo(todosMap, commandArg);
                     break;
+                    case "remove_todo":
+                        TodoManager.removeTodo(todosMap, commandArg);
                     case "list":
                         TodoManager.listAllTodos(todosMap);
+                    break;
+                    case "remove_all":
+                        TodoManager.removeAll(todosMap);
+                    break;
+                    case  "save":
+                        TodoManager.save(todosMap, filename);
+                    break;
+                    case "exit":
+                        System.out.println("До свидания");
+                        System.exit(0);
+                    break;
+                    default:
+                        System.out.println("Команда не найдена. Введите help для помощи");
                     break;
                 }
             } catch (IOException ioEx) {

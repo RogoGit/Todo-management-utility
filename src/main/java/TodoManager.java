@@ -5,7 +5,7 @@ import java.util.*;
 
 public class TodoManager {
 
-   public static void addTodo(TreeMap<String,Todo> todosMap, String filename, String commandArg) throws IOException {
+   public static void addTodo(TreeMap<String,Todo> todosMap, String commandArg) throws IOException {
         Gson gson = new Gson();
         Todo todo = gson.fromJson(commandArg, Todo.class);
         if (todo.getIsDone() == null) todo.setDone(false);
@@ -27,8 +27,12 @@ public class TodoManager {
         } else {
             System.out.println("Не удалось добавить, необходимо заполнить поля title, taskDescription, priority");
         }
+    }
+
+    public static void save(TreeMap<String,Todo> todosMap, String filename) {
         try {
             TodoIO.writeToFile(todosMap, filename);
+            System.out.println("Список дел успешно сохранен");
         } catch (IOException x) {
             System.out.println("Не удается сохранить изменения в файл (IOException)");
         }
@@ -46,6 +50,16 @@ public class TodoManager {
         });
         sortedTodosMap.putAll(todosMap);
         sortedTodosMap.forEach((key,value) -> System.out.println(value.toString()));
+    }
+
+    public static void removeTodo(TreeMap<String,Todo> todosMap, String title) {
+       todosMap.entrySet().removeIf(entry -> entry.getKey().equals(title));
+       System.out.println("Дело \"" + title + "\" успешно удалено");
+    }
+
+    public static void removeAll(TreeMap<String,Todo> todosMap) {
+       todosMap.clear();
+       System.out.println("Список дел очищен");
     }
 
     public static void showHelp() {
