@@ -54,7 +54,7 @@ public class TodoManager {
 
     public static void listByCompletion(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
-           System.out.println("Неправильный второй аргумент команды (должно быть true или false)");
+           System.out.println("Неправильный аргумент команды (должно быть true или false)");
            return;
        }
        boolean isCompleted = Boolean.parseBoolean(commandArgs[0]);
@@ -92,7 +92,7 @@ public class TodoManager {
                sortedTodos.forEach((key, value) -> System.out.println(value.toString()));
            }
        } catch (IllegalArgumentException ex) {
-           System.out.println("Неправильный второй аргумент команды (должно быть LOW, MEDIUM или HIGH)");
+           System.out.println("Неправильный аргумент команды (должно быть LOW, MEDIUM или HIGH)");
        }
     }
 
@@ -129,6 +129,21 @@ public class TodoManager {
         } else {
             System.out.println("Нет дела с заданным заголовком");
         }
+    }
+
+    public static void setPriority(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+       try {
+           String title = commandArgs[0];
+           Todo.TodoPriority priority = Todo.TodoPriority.valueOf(commandArgs[1].toUpperCase().trim());
+           if (todosMap.containsKey(title)) {
+               todosMap.get(title).setPriority(priority);
+               System.out.println("Приоритет изменен");
+           } else {
+               System.out.println("Нет дела с заданным заголовком");
+           }
+       } catch (IllegalArgumentException ex) {
+           System.out.println("Неправильный второй аргумент команды (должно быть LOW, MEDIUM или HIGH)");
+       }
     }
 
     public static void showHelp() {

@@ -3,13 +3,13 @@
     "title": "task 1",
     "taskDescription": "description 1",
     "isDone": false,
-    "priority": "HIGH"
+    "priority": "LOW"
   },
   {
     "title": "task 2",
     "taskDescription": "description 2",
     "isDone": false,
-    "priority": "LOW"
+    "priority": "HIGH"
   },
   {
     "title": "task 3",

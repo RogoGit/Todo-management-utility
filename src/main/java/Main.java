@@ -67,6 +67,9 @@ public class Main {
                     case "mark_undone":
                         TodoManager.markUndone(todosMap, commandArgs);
                         break;
+                    case "set_priority":
+                        TodoManager.setPriority(todosMap, commandArgs);
+                        break;
                     case  "save":
                         TodoManager.save(todosMap, filename);
                     break;

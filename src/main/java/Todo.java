@@ -30,6 +30,10 @@ public class Todo implements Comparable<Todo> {
         isDone = done;
     }
 
+    public void setPriority(TodoPriority todoPriority) {
+        priority = todoPriority;
+    }
+
     @Override
     public int compareTo(Todo anotherTodo) {
         if (this.getIsDone() && !anotherTodo.getIsDone()) return -1;
