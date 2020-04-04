@@ -57,7 +57,7 @@ public class Todo implements Comparable<Todo> {
                 "Приоритет: " + priorStatus + "\n";
     }
 
-    private enum TodoPriority {
+    public enum TodoPriority {
         HIGH,
         MEDIUM,
         LOW

@@ -11,6 +11,3 @@ out/
 *.iml
 *.ipr
 *.iws
-
-# JSON file with todos
-todo-list.json

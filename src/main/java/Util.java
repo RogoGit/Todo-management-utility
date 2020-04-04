@@ -9,15 +9,15 @@ public class Util {
         String[] commandNotFound = {""};
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String command = br.readLine();
+        if (command.startsWith("list_")) {
+            return command.split(" ");
+        }
         if (command.toLowerCase().startsWith("add_todo")) return parseAddTodoJSON(command);
         if (command.toLowerCase().trim().startsWith("help") || command.toLowerCase().trim().startsWith("list") ||
                 command.toLowerCase().trim().startsWith("save") || command.toLowerCase().trim().startsWith("exit") ||
                 command.toLowerCase().trim().startsWith("remove_all")) {
             String[] commandParts = {command};
             return commandParts;
-        }
-        if (command.startsWith("list_")) {
-            return command.split(" ");
         }
         if (command.startsWith("remove_todo") || command.startsWith("set_priority") ||
                 command.startsWith("mark_done") || command.startsWith("mark_undone")) {
@@ -82,6 +82,20 @@ public class Util {
             }
         }
         return commandParts;
+    }
+
+    public static TreeMap<String,Todo> sortTodosMap(TreeMap<String, Todo> todosMap) {
+        TreeMap<String, Todo> sortedTodosMap = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String key1, String key2) {
+                int returned = (-1)*todosMap.get(key1).compareTo(todosMap.get(key2));
+                if (returned == 0 && !key1.equals(key2))
+                    returned = 1;
+                return returned;
+            }
+        });
+        sortedTodosMap.putAll(todosMap);
+        return sortedTodosMap;
     }
     
 }

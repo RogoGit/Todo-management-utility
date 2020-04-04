@@ -48,6 +48,12 @@ public class Main {
                     case "list":
                         TodoManager.listAllTodos(todosMap);
                     break;
+                    case "list_by_completion":
+                        TodoManager.listByCompletion(todosMap, commandArgs);
+                    break;
+                    case "list_by_priority":
+                        TodoManager.listByPriority(todosMap, commandArgs);
+                        break;
                     case "remove_all":
                         TodoManager.removeAll(todosMap);
                     break;
@@ -68,6 +74,8 @@ public class Main {
                 }
             } catch (IOException ioEx) {
                 System.out.println("IOException");
+            } catch (ArrayIndexOutOfBoundsException aio) {
+                System.out.println("Отсутствуют обязательный аргумент (введите help для справки)");
             } catch (JsonSyntaxException jsonEx) {
                 System.out.println("Ошибка синтаксиса JSON. Проверьте правильность ввода");
             } catch (NullPointerException np) {
