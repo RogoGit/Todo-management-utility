@@ -36,14 +36,15 @@ public class Main {
             try {
                 String[] userCommand = Util.parseUserInput();
                 String commandItself = userCommand[0];
-                String commandArg = "";
-                if (userCommand.length > 1) commandArg = userCommand[1];
-                switch (commandItself.toLowerCase()) {
+                String[] commandArgs = new String[userCommand.length-1];
+                System.arraycopy(userCommand,1,commandArgs,0,userCommand.length-1);
+                switch (commandItself.toLowerCase().trim()) {
                     case "add_todo":
-                        TodoManager.addTodo(todosMap, commandArg);
+                        TodoManager.addTodo(todosMap, commandArgs);
                     break;
                     case "remove_todo":
-                        TodoManager.removeTodo(todosMap, commandArg);
+                        TodoManager.removeTodo(todosMap, commandArgs);
+                    break;
                     case "list":
                         TodoManager.listAllTodos(todosMap);
                     break;
@@ -53,18 +54,27 @@ public class Main {
                     case  "save":
                         TodoManager.save(todosMap, filename);
                     break;
+                    case "help":
+                        TodoManager.showHelp();
+                    break;
                     case "exit":
                         System.out.println("До свидания");
+                        TodoManager.save(todosMap, filename);
                         System.exit(0);
                     break;
                     default:
-                        System.out.println("Команда не найдена. Введите help для помощи");
+                        System.out.println("Не удалось распознать команду. Введите help для помощи");
                     break;
                 }
             } catch (IOException ioEx) {
                 System.out.println("IOException");
             } catch (JsonSyntaxException jsonEx) {
-                System.out.println("Ошибка синтаксиса JSON");
+                System.out.println("Ошибка синтаксиса JSON. Проверьте правильность ввода");
+            } catch (NullPointerException np) {
+                //handling Ctrl-D
+                System.out.println("До свидания");
+                TodoManager.save(todosMap, filename);
+                System.exit(0);
             }
         } while (true);
     }

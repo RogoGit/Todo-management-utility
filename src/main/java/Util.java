@@ -4,20 +4,43 @@ import java.util.*;
 public class Util {
     
     public static String[] parseUserInput() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Enter Command:");
+        System.out.print("Введите команду:");
         System.out.println();
+        String[] commandNotFound = {""};
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String command = br.readLine();
+        if (command.toLowerCase().startsWith("add_todo")) return parseAddTodoJSON(command);
+        if (command.toLowerCase().trim().startsWith("help") || command.toLowerCase().trim().startsWith("list") ||
+                command.toLowerCase().trim().startsWith("save") || command.toLowerCase().trim().startsWith("exit") ||
+                command.toLowerCase().trim().startsWith("remove_all")) {
+            String[] commandParts = {command};
+            return commandParts;
+        }
+        if (command.startsWith("list_")) {
+            return command.split(" ");
+        }
+        if (command.startsWith("remove_todo") || command.startsWith("set_priority") ||
+                command.startsWith("mark_done") || command.startsWith("mark_undone")) {
+            if (!command.matches(".*\".*\".*")) {
+                System.out.println("Используйте двойные кавычки при задании заголовка дела");
+                return commandNotFound;
+            }
+            return command.split("\"");
+        }
+        return commandNotFound;
+    }
+
+    private static String[] parseAddTodoJSON(String firstLine) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String lineOfInput;
         List<String> inputs = new ArrayList<>();
         int braceCounter = -1;
         int firstBrace = 0;
+        boolean firstLineFlag = true;
         do {
-            lineOfInput = br.readLine();
+            lineOfInput = (firstLineFlag) ? firstLine: br.readLine();
+            firstLineFlag = false;
             inputs.add(lineOfInput);
-            if ((lineOfInput.trim().toLowerCase().equals("help")) || (lineOfInput.trim().toLowerCase().equals("list"))
-                    || (lineOfInput.trim().toLowerCase().equals("save")) || (lineOfInput.trim().toLowerCase().equals("exit"))) {
-                break;
-            }
             if (lineOfInput.contains("{")) {
                 for (int i=0; i < lineOfInput.length(); i++) {
                     if (lineOfInput.charAt(i) == '{') {
@@ -51,11 +74,8 @@ public class Util {
             }
         }
         String command = sb.toString();
-        if (!((command.toLowerCase().equals("help")) || (lineOfInput.trim().toLowerCase().equals("list"))
-                || (command.toLowerCase().equals("save")) || (command.toLowerCase().equals("exit")))) {
-            System.out.println(command);
-        }
-        String commandParts[] = command.replaceAll(" ", "").split("\\{");
+        System.out.println(command);
+        String commandParts[] = command.split("\\{");
         for (int j = 0; j < commandParts.length; j++) {
             if (j != 0) {
                 commandParts[j] = "{" + commandParts[j];

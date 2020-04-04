@@ -5,9 +5,13 @@ import java.util.*;
 
 public class TodoManager {
 
-   public static void addTodo(TreeMap<String,Todo> todosMap, String commandArg) throws IOException {
+   public static void addTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) throws IOException {
         Gson gson = new Gson();
-        Todo todo = gson.fromJson(commandArg, Todo.class);
+        Todo todo = gson.fromJson(commandArgs[0], Todo.class);
+        if (todo.getPriority() == null) {
+            System.out.println("Не удалось добавить. Неправильно введен приоритет (LOW/MEDIUM/HIGH)");
+            return;
+        }
         if (todo.getIsDone() == null) todo.setDone(false);
         if (todo.getTitle() != null && todo.getTaskDescription()!= null) {
             if (todosMap.containsKey(todo.getTitle())) {
@@ -52,7 +56,8 @@ public class TodoManager {
         sortedTodosMap.forEach((key,value) -> System.out.println(value.toString()));
     }
 
-    public static void removeTodo(TreeMap<String,Todo> todosMap, String title) {
+    public static void removeTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+       String title = commandArgs[0];
        todosMap.entrySet().removeIf(entry -> entry.getKey().equals(title));
        System.out.println("Дело \"" + title + "\" успешно удалено");
     }
@@ -68,11 +73,11 @@ public class TodoManager {
        System.out.println("add_todo {todo} - Добавить новое дело (задается в формате JSON, поддерживается многострочный ввод)");
        System.out.println("list_by_completion true/fasle - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
        System.out.println("list_by_priority low/medium/high - Показать список всех дел с указанным приоритетом");
-       System.out.println("remove_todo title- Удалить дело по его заголовку");
+       System.out.println("remove_todo \"title\"- Удалить дело по его заголовку");
        System.out.println("remove_all - Удалить все дела безвозвратно");
-       System.out.println("mark_done title - Обозначить дело как выполненное");
-       System.out.println("mark_undone title - Обозначить дело как невыполненное");
-       System.out.println("set_priority title low/medium/high - Поставить заданный приоритет выбранному делу");
+       System.out.println("mark_done \"title\" - Обозначить дело как выполненное");
+       System.out.println("mark_undone \"title\" - Обозначить дело как невыполненное");
+       System.out.println("set_priority \"title\" low/medium/high - Поставить заданный приоритет выбранному делу");
        System.out.println("save - Сохранить список дел (сохранение также будет произведено автоматически при выходе из программы)");
        System.out.println("exit - Выход из программы");
     }
