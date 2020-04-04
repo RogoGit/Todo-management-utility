@@ -4,7 +4,7 @@ import java.util.*;
 public class Util {
     
     public static String[] parseUserInput() throws IOException {
-        System.out.print("Введите команду:");
+        System.out.print("\nВведите команду:");
         System.out.println();
         String[] commandNotFound = {""};
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

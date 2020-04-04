@@ -15,7 +15,6 @@ public class Main {
         String[] file = new String[]{args.length > 0 ? args[0] : "todo-list.json"};
         String filename = file[0];
         System.out.println();
-        System.out.println("Введите help для помощи");
         try {
             todosMap = TodoIO.readFromFile(filename);
         } catch (NullPointerException np) {
@@ -30,6 +29,11 @@ public class Main {
             System.out.println("Ошибка чтения JSON, проверьте правильность формата данных");
         }
 
+        System.out.println("----------------------------------");
+        System.out.println("       TODO MANAGER UTILITY      ");
+        System.out.println("----------------------------------\n");
+
+        System.out.println("Испольуется файл todo-list.json. Поддерживаются следующие команды:\n");
         TodoManager.showHelp();
 
         do {
@@ -57,6 +61,12 @@ public class Main {
                     case "remove_all":
                         TodoManager.removeAll(todosMap);
                     break;
+                    case "mark_done":
+                        TodoManager.markDone(todosMap, commandArgs);
+                    break;
+                    case "mark_undone":
+                        TodoManager.markUndone(todosMap, commandArgs);
+                        break;
                     case  "save":
                         TodoManager.save(todosMap, filename);
                     break;

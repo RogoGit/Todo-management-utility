@@ -111,6 +111,26 @@ public class TodoManager {
        System.out.println("Список дел очищен");
     }
 
+    public static void markDone(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+        String title = commandArgs[0];
+        if (todosMap.containsKey(title)) {
+            todosMap.get(title).setDone(true);
+            System.out.println("Установлен статус \"сделано\"");
+        } else {
+            System.out.println("Нет дела с заданным заголовком");
+        }
+    }
+
+    public static void markUndone(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+        String title = commandArgs[0];
+        if (todosMap.containsKey(title)) {
+            todosMap.get(title).setDone(false);
+            System.out.println("Установлен статус \"не сделано\"");
+        } else {
+            System.out.println("Нет дела с заданным заголовком");
+        }
+    }
+
     public static void showHelp() {
        System.out.println("help - Инструкция к использованию программы, список возможных команд");
        System.out.println("list - Показать список всех дел");
