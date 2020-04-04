@@ -52,12 +52,15 @@ public class Main {
                     case "list":
                         TodoManager.listAllTodos(todosMap);
                     break;
+                    case "list_by":
+                        TodoManager.listBy(todosMap, commandArgs);
+                    break;
                     case "list_by_completion":
                         TodoManager.listByCompletion(todosMap, commandArgs);
                     break;
                     case "list_by_priority":
                         TodoManager.listByPriority(todosMap, commandArgs);
-                        break;
+                    break;
                     case "remove_all":
                         TodoManager.removeAll(todosMap);
                     break;

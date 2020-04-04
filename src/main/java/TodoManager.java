@@ -96,6 +96,35 @@ public class TodoManager {
        }
     }
 
+    public static void listBy(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+        if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
+            System.out.println("Неправильный первый аргумент команды (должно быть true или false)");
+            return;
+        }
+        boolean isCompleted = Boolean.parseBoolean(commandArgs[0]);
+        try {
+            Todo.TodoPriority priority = Todo.TodoPriority.valueOf(commandArgs[1].toUpperCase());
+            TreeMap<String, Todo> filteredMap = todosMap.entrySet()
+                    .stream()
+                    .filter(map -> map.getValue().getPriority().equals(priority))
+                    .filter(map -> map.getValue().getIsDone() == isCompleted)
+                    .collect(Collectors.toMap(Map.Entry::getKey,
+                            Map.Entry::getValue,
+                            (v1, v2) -> {
+                                throw new IllegalStateException();
+                            },
+                            TreeMap::new));
+            if (filteredMap.isEmpty()) {
+                System.out.println("Нет ни одного дела с выбранными параметрами");
+            } else {
+                TreeMap<String, Todo> sortedTodos = Util.sortTodosMap(filteredMap);
+                sortedTodos.forEach((key, value) -> System.out.println(value.toString()));
+            }
+        } catch (IllegalArgumentException ex) {
+            System.out.println("Неправильный второй аргумент команды (должно быть LOW, MEDIUM или HIGH)");
+        }
+    }
+
     public static void removeTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        String title = commandArgs[0];
        if (todosMap.containsKey(title)) {
@@ -150,8 +179,10 @@ public class TodoManager {
        System.out.println("help - Инструкция к использованию программы, список возможных команд");
        System.out.println("list - Показать список всех дел");
        System.out.println("add_todo {todo} - Добавить новое дело (задается в формате JSON, поддерживается многострочный ввод)");
-       System.out.println("list_by_completion true/fasle - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
-       System.out.println("list_by_priority low/medium/high - Показать список всех дел с указанным приоритетом");
+       System.out.println("list_by_completion <true/false> - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
+       System.out.println("list_by_priority <low/medium/high> - Показать список всех дел с указанным приоритетом");
+       System.out.println("list_by <true/false> <low/medium/high> - Показать список всех дел согласно заданному фильтру " +
+               "(первый аргумент - выполнено дело или нет, второй - приоритет)");
        System.out.println("remove_todo \"title\"- Удалить дело по его заголовку");
        System.out.println("remove_all - Удалить все дела безвозвратно");
        System.out.println("mark_done \"title\" - Обозначить дело как выполненное");
