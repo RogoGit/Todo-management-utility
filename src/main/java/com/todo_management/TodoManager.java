@@ -33,6 +33,37 @@ public class TodoManager {
         }
     }
 
+    public static void addTodo(TreeMap<String,Todo> todosMap) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Введите заголовок нового дела");
+        String title = br.readLine();
+        if (todosMap.containsKey(title)) {
+            System.out.println("Дело с таким заголовком уже существует. Перезаписать его? (введите yes, если да, иначе - отмена  )");
+            String choice = br.readLine();
+            if (!choice.trim().toLowerCase().equals("yes")) {
+                System.out.println("Отмена добавления нового дела");
+                return;
+            }
+        }
+        System.out.println("Введите описание");
+        String description = br.readLine();
+        System.out.println("Выберите приоритет (LOW/MEDIUM/HIGH)");
+        String priority;
+        do {
+            priority = br.readLine();
+            if (!(priority.toUpperCase().equals("LOW") || priority.toUpperCase().equals("MEDIUM")
+                    || priority.toUpperCase().equals("HIGH"))) {
+                System.out.println("Неправильно задан приоритет (допустимо LOW, MEDIUM или HIGH)");
+                System.out.println("Выберите приоритет");
+            } else {
+                break;
+            }
+        }
+        while (true);
+        todosMap.put(title, new Todo(title, description, false, Todo.TodoPriority.valueOf(priority.toUpperCase())));
+        System.out.println("Добавлено");
+    }
+
     public static void save(TreeMap<String,Todo> todosMap, String filename) {
         try {
             TodoIO.writeToFile(todosMap, filename);
@@ -185,6 +216,7 @@ public class TodoManager {
     public static void showHelp() {
        System.out.println("help - Инструкция к использованию программы, список возможных команд");
        System.out.println("list - Показать список всех дел");
+       System.out.println("add_todo - Добавить новое дело");
        System.out.println("json_add_todo {todo} - Добавить новое дело в формате JSON (поддерживается многострочный ввод)");
        System.out.println("list_by_completion <true/false> - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
        System.out.println("list_by_priority <low/medium/high> - Показать список всех дел с указанным приоритетом");

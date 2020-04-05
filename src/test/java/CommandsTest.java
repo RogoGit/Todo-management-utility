@@ -2,9 +2,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import todo_management.Todo;
-import todo_management.TodoManager;
-import todo_management.Util;
+import com.todo_management.Todo;
+import com.todo_management.TodoManager;
+import com.todo_management.Util;
 
 import java.util.TreeMap;
 

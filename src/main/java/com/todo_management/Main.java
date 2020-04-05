@@ -49,6 +49,9 @@ public class Main {
                 String[] commandArgs = new String[userCommand.length-1];
                 System.arraycopy(userCommand,1,commandArgs,0,userCommand.length-1);
                 switch (commandItself.toLowerCase().trim()) {
+                    case "add_todo":
+                        TodoManager.addTodo(todosMap);
+                    break;
                     case "json_add_todo":
                         TodoManager.addTodoJson(todosMap, commandArgs);
                     break;
