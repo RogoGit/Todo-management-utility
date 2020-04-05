@@ -288,7 +288,7 @@ public class TodoManager {
 
        System.out.println("title - уникальный заголовок каждого дела, у каждого дела он должен быть свой");
        System.out.println("taskDescription - описание дела");
-       System.out.println("isDone - показывает, выполнено дело или нет (true - если да, false - если нет). Может принмать только эти значения");
+       System.out.println("isDone - показывает, выполнено дело или нет (true - если да, false - если нет). Может принимать только эти значения");
        System.out.println("priority - приоритет дела (LOW - низкий, MEDIUM - средний, HIGH - выоокий). Может принимать только эти значения\n");
 
        System.out.println("При отображении списка дел дела сортируются в следующем порядке:");
@@ -301,7 +301,7 @@ public class TodoManager {
        System.out.println("list - Показать список всех дел");
        System.out.println("add_todo - Добавить новое дело");
        System.out.println("json_add_todo {todo} - Добавить новое дело в формате JSON (поддерживается многострочный ввод)");
-       System.out.println("list_by_completion <true/false> - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
+       System.out.println("list_by_completion <true/false> - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (false) дел");
        System.out.println("list_by_priority <low/medium/high> - Показать список всех дел с указанным приоритетом");
        System.out.println("list_by <true/false> <low/medium/high> - Показать список всех дел согласно заданному фильтру " +
                "(первый аргумент - выполнено дело или нет, второй - приоритет)");
