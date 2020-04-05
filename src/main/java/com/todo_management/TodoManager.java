@@ -8,15 +8,11 @@ import java.util.stream.Collectors;
 
 public class TodoManager {
 
-   public static void addTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) throws IOException {
+   public static void addTodoJson(TreeMap<String,Todo> todosMap, String[] commandArgs) throws IOException {
         Gson gson = new Gson();
         Todo todo = gson.fromJson(commandArgs[0], Todo.class);
-        if (todo.getPriority() == null) {
-            System.out.println("Не удалось добавить. Неправильно введен приоритет (LOW/MEDIUM/HIGH)");
-            return;
-        }
         if (todo.getIsDone() == null) todo.setDone(false);
-        if (todo.getTitle() != null && todo.getTaskDescription()!= null) {
+        if (todo.getTitle() != null && todo.getTaskDescription()!= null && todo.getPriority()!= null) {
             if (todosMap.containsKey(todo.getTitle())) {
                 System.out.println("Дело с таким заголовком уже существует. Перезаписать его? (введите yes, если да, иначе - отмена  )");
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,6 +29,7 @@ public class TodoManager {
             }
         } else {
             System.out.println("Не удалось добавить, необходимо заполнить поля title, taskDescription, priority");
+            System.out.println("Убедитесь, что все поля укащаны правильно, приоритет задан как LOW/MEDIUM/HIGH");
         }
     }
 
@@ -188,7 +185,7 @@ public class TodoManager {
     public static void showHelp() {
        System.out.println("help - Инструкция к использованию программы, список возможных команд");
        System.out.println("list - Показать список всех дел");
-       System.out.println("add_todo {todo} - Добавить новое дело (задается в формате JSON, поддерживается многострочный ввод)");
+       System.out.println("json_add_todo {todo} - Добавить новое дело в формате JSON (поддерживается многострочный ввод)");
        System.out.println("list_by_completion <true/false> - В зависиости от аргумента команды - показать список всех завершенных (true) или незавершенных (fasle) дел");
        System.out.println("list_by_priority <low/medium/high> - Показать список всех дел с указанным приоритетом");
        System.out.println("list_by <true/false> <low/medium/high> - Показать список всех дел согласно заданному фильтру " +

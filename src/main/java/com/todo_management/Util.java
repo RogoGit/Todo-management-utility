@@ -17,7 +17,7 @@ public class Util {
         if (command.startsWith("list_")) {
             return command.split(" ");
         }
-        if (command.toLowerCase().startsWith("add_todo")) return parseAddTodoJSON(command);
+        if (command.toLowerCase().startsWith("json_add_todo")) return parseAddTodoJSON(command);
         if (command.toLowerCase().trim().startsWith("help") || command.toLowerCase().trim().startsWith("list") ||
                 command.toLowerCase().trim().startsWith("save") || command.toLowerCase().trim().startsWith("exit") ||
                 command.toLowerCase().trim().startsWith("remove_all")) {
