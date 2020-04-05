@@ -1,3 +1,5 @@
+package com.todo_management;
+
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
@@ -10,6 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("----------------------------------");
+        System.out.println("       TODO MANAGER UTILITY      ");
+        System.out.println("----------------------------------\n");
+
+        System.out.println("Испольуется файл todo-list.json. Поддерживаются следующие команды:\n");
+        TodoManager.showHelp();
+
         TreeMap<String, Todo> todosMap = new TreeMap<>();
 
         String[] file = new String[]{args.length > 0 ? args[0] : "todo-list.json"};
@@ -19,22 +28,19 @@ public class Main {
             todosMap = TodoIO.readFromFile(filename);
         } catch (NullPointerException np) {
             System.out.println("Выбранный файл не должен содержать null, все поля должны быть заполнены");
+            System.exit(0);
         } catch (AccessDeniedException permDenied) {
             System.out.println("Доступ к файлу запрещен");
+            System.exit(0);
         } catch (FileNotFoundException notFound) {
-            System.out.println("Данный файл не найден");
+            System.out.println("Файл todo-list.json не найден, он будет создан атвоматически");
         } catch (IOException ioEx) {
             System.out.println("Не удается прочитать список дел из выбранного файла (IOException)");
+            System.exit(0);
         } catch (JsonParseException parseEx) {
             System.out.println("Ошибка чтения JSON, проверьте правильность формата данных");
+            System.exit(0);
         }
-
-        System.out.println("----------------------------------");
-        System.out.println("       TODO MANAGER UTILITY      ");
-        System.out.println("----------------------------------\n");
-
-        System.out.println("Испольуется файл todo-list.json. Поддерживаются следующие команды:\n");
-        TodoManager.showHelp();
 
         do {
             try {

@@ -1,3 +1,5 @@
+package com.todo_management;
+
 public class Todo implements Comparable<Todo> {
 
     private String title;

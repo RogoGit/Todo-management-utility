@@ -2,6 +2,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import todo_management.Todo;
+import todo_management.TodoManager;
+import todo_management.Util;
 
 import java.util.TreeMap;
 
@@ -41,7 +44,7 @@ public class CommandsTest {
     }
 
     /**
-     * Testing markDone - if Todo object isDone field really became true
+     * Testing markDone - if todo_management.Todo object isDone field really became true
      */
     @Test
     public void testMarkDone() {
@@ -54,7 +57,7 @@ public class CommandsTest {
     }
 
     /**
-     * Testing markUndone - if Todo object isDone field really became false
+     * Testing markUndone - if todo_management.Todo object isDone field really became false
      */
     @Test
     public void testMarkUndone() {
@@ -67,7 +70,7 @@ public class CommandsTest {
     }
 
     /**
-     * Testing setPriority - if Todo priority changed to given enum value
+     * Testing setPriority - if todo_management.Todo priority changed to given enum value
      */
     @Test
     public void testSetPriority() {
@@ -80,7 +83,7 @@ public class CommandsTest {
     }
 
     /**
-     * Testing removeTodo - if Todo removed from map
+     * Testing removeTodo - if todo_management.Todo removed from map
      */
     @Test
     public void testRemoveTodo() {
@@ -94,7 +97,7 @@ public class CommandsTest {
     }
 
     /**
-     * Testing removeAll - if all Todo objects removed
+     * Testing removeAll - if all todo_management.Todo objects removed
      */
     @Test
     public void testRemoveAll() {
