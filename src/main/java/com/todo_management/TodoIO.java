@@ -8,6 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.*;
 import java.io.*;
 
+/**
+ * Methods for reading from file and writing to file
+ */
+
 public class TodoIO {
 
     public static TreeMap<String, Todo> readFromFile(String filename) throws IOException, NullPointerException, JsonParseException {

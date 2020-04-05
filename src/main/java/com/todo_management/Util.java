@@ -4,7 +4,12 @@ import java.io.*;
 import java.util.*;
 
 public class Util {
-    
+
+    /**
+     * Parsing user input to separate command and arguments
+     * @return array of command parts - command itself and its arguments
+     * @throws IOException
+     */
     public static String[] parseUserInput() throws IOException {
         System.out.print("\nВведите команду:");
         System.out.println();
@@ -35,6 +40,9 @@ public class Util {
         return commandNotFound;
     }
 
+    /**
+     * Parsing JSON in json_add_todo command, handling multi line JSON
+     */
     private static String[] parseAddTodoJSON(String firstLine) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String lineOfInput;
@@ -89,6 +97,11 @@ public class Util {
         return commandParts;
     }
 
+    /**
+     * Sorting map of Todo objects
+     * @param todosMap - map to sort
+     * @return sorted map of todos
+     */
     public static TreeMap<String,Todo> sortTodosMap(TreeMap<String, Todo> todosMap) {
         TreeMap<String, Todo> sortedTodosMap = new TreeMap<>(new Comparator<String>() {
             @Override

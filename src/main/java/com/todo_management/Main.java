@@ -20,8 +20,8 @@ public class Main {
 
         String[] file = new String[]{args.length > 0 ? args[0] : "todo-list.json"};
         String filename = file[0];
-        System.out.println("Испольуется файл " + filename + ". Чтобы использовать другой файл укажите его имя в качестве аргумента.\n");
-        System.out.println("Поддерживаются следующие команды:");
+        System.out.println("Испольуется файл " + filename + ". Чтобы использовать другой файл укажите его имя " +
+                "в качестве аргумента при запуске команды.\n");
         TodoManager.showHelp();
         System.out.println();
         try {
@@ -41,6 +41,8 @@ public class Main {
             System.out.println("Ошибка чтения JSON, проверьте правильность формата данных");
             System.exit(0);
         }
+
+        // infinite loop for user input
 
         do {
             try {

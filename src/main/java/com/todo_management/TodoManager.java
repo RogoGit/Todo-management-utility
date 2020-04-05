@@ -6,8 +6,18 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Commands for todo list management
+ */
+
 public class TodoManager {
 
+    /**
+     * Adding new todo in JSON format
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs - arguments for this command - new Todo object  in json format
+     * @throws IOException - exception while reading user input
+     */
    public static void addTodoJson(TreeMap<String,Todo> todosMap, String[] commandArgs) throws IOException {
         Gson gson = new Gson();
         Todo todo = gson.fromJson(commandArgs[0], Todo.class);
@@ -33,6 +43,11 @@ public class TodoManager {
         }
     }
 
+    /**
+     * Adding new todo without JSON
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @throws IOException - exception while reading user input
+     */
     public static void addTodo(TreeMap<String,Todo> todosMap) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите заголовок нового дела");
@@ -64,6 +79,11 @@ public class TodoManager {
         System.out.println("Добавлено");
     }
 
+    /**
+     * Saving user todos to file
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param filename - name of file, where todos are stored
+     */
     public static void save(TreeMap<String,Todo> todosMap, String filename) {
         try {
             TodoIO.writeToFile(todosMap, filename);
@@ -73,6 +93,10 @@ public class TodoManager {
         }
     }
 
+    /**
+     * Printing list of all user todos
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     */
     public static void listAllTodos(TreeMap<String,Todo> todosMap) {
        if (todosMap.isEmpty()) {
             System.out.println("Список дел пуст, пока нет ни одного дела");
@@ -82,6 +106,12 @@ public class TodoManager {
        }
     }
 
+    /**
+     * Printing list of todos filtered by isDone field
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs - boolean value of isDone (true/false), which list is filtered by
+     * @return filtered map - used for tests
+     */
     public static TreeMap<String, Todo> listByCompletion(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
            System.out.println("Неправильный аргумент команды (должно быть true или false)");
@@ -105,6 +135,12 @@ public class TodoManager {
        }
     }
 
+    /**
+     * Printing list of todos filtered by priority field
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs - TodoPriority enum value, which list is filtered by
+     * @return filtered map - used for tests
+     */
     public static TreeMap<String, Todo> listByPriority(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        try {
            Todo.TodoPriority priority = Todo.TodoPriority.valueOf(commandArgs[0].toUpperCase());
@@ -131,6 +167,12 @@ public class TodoManager {
        }
     }
 
+    /**
+     * Printing list of todos filtered by both priority and isDone fields
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs - boolean value of isDone and TodoPriority enum value, which list is filtered by
+     * @return filtered map - used for tests
+     */
     public static TreeMap<String, Todo> listBy(TreeMap<String,Todo> todosMap, String[] commandArgs) {
         if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
             System.out.println("Неправильный первый аргумент команды (должно быть true или false)");
@@ -163,6 +205,11 @@ public class TodoManager {
         }
     }
 
+    /**
+     * Removing todo by its title
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs - title of todo, which should be deleted
+     */
     public static void removeTodo(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        String title = commandArgs[0];
        if (todosMap.containsKey(title)) {
@@ -173,11 +220,20 @@ public class TodoManager {
        }
     }
 
+    /**
+     * Removing all todos
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     */
     public static void removeAll(TreeMap<String,Todo> todosMap) {
        todosMap.clear();
        System.out.println("Список дел очищен");
     }
 
+    /**
+     * Mark todo as done by its title (setting isDone field as true)
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs -  title of todo
+     */
     public static void markDone(TreeMap<String,Todo> todosMap, String[] commandArgs) {
         String title = commandArgs[0];
         if (todosMap.containsKey(title)) {
@@ -188,6 +244,11 @@ public class TodoManager {
         }
     }
 
+    /**
+     * Mark todo as not done by its title (setting isDone field as false)
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs -  title of todo
+     */
     public static void markUndone(TreeMap<String,Todo> todosMap, String[] commandArgs) {
         String title = commandArgs[0];
         if (todosMap.containsKey(title)) {
@@ -198,6 +259,11 @@ public class TodoManager {
         }
     }
 
+    /**
+     * Setting todo priority
+     * @param todosMap - map of all todos from file (Key - title of Todo, Value - Todo object itself)
+     * @param commandArgs -  title of todo and priority to be set
+     */
     public static void setPriority(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        try {
            String title = commandArgs[0];
@@ -214,6 +280,23 @@ public class TodoManager {
     }
 
     public static void showHelp() {
+       System.out.println("Используемый JSON формат дела:");
+       System.out.println("{\"title\": \"Заголовок задания\", ");
+       System.out.println("\"taskDescription\": \"Описание дела\", ");
+       System.out.println("\"isDone\": false, ");
+       System.out.println("\"priority\": \"HIGH\"}\n");
+
+       System.out.println("title - уникальный заголовок каждого дела, у каждого дела он должен быть свой");
+       System.out.println("taskDescription - описание дела");
+       System.out.println("isDone - показывает, выполнено дело или нет (true - если да, false - если нет). Может принмать только эти значения");
+       System.out.println("priority - приоритет дела (LOW - низкий, MEDIUM - средний, HIGH - выоокий). Может принимать только эти значения\n");
+
+       System.out.println("При отображении списка дел дела сортируются в следующем порядке:");
+       System.out.println("- по полю isDone - сначала идут невыполненные задания, потом выполненные ");
+       System.out.println("- по приоритету - при одинаковом значении isDone сначала отбражаются дела с высоким приоритетом," +
+               "потом со средним, потом с низким.\n");
+
+       System.out.println("Поддерживаются следующие команды:");
        System.out.println("help - Инструкция к использованию программы, список возможных команд");
        System.out.println("list - Показать список всех дел");
        System.out.println("add_todo - Добавить новое дело");
