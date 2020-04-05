@@ -5,9 +5,11 @@ public class Todo implements Comparable<Todo> {
     private Boolean isDone;
     private TodoPriority priority;
 
-    public Todo(String title, String taskDescription) {
+    public Todo(String title, String taskDescription, Boolean isDone, TodoPriority priority) {
         this.title = title;
         this.taskDescription = taskDescription;
+        this.isDone = isDone;
+        this.priority = priority;
     }
 
     public String getTitle() {

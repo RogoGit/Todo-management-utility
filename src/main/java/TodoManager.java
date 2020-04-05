@@ -52,10 +52,10 @@ public class TodoManager {
        }
     }
 
-    public static void listByCompletion(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+    public static TreeMap<String, Todo> listByCompletion(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
            System.out.println("Неправильный аргумент команды (должно быть true или false)");
-           return;
+           return null;
        }
        boolean isCompleted = Boolean.parseBoolean(commandArgs[0]);
        TreeMap<String,Todo> filteredMap = todosMap.entrySet()
@@ -67,13 +67,15 @@ public class TodoManager {
                        TreeMap::new));
        if (filteredMap.isEmpty()) {
             System.out.println("Нет ни одного дела с выбранным параметром");
+            return null;
         } else {
-            TreeMap<String,Todo> sortedTodos = Util.sortTodosMap(filteredMap);
-            sortedTodos.forEach((key, value) -> System.out.println(value.toString()));
+            TreeMap<String,Todo> sortedFilteredTodos = Util.sortTodosMap(filteredMap);
+            sortedFilteredTodos.forEach((key, value) -> System.out.println(value.toString()));
+            return sortedFilteredTodos;
        }
     }
 
-    public static void listByPriority(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+    public static TreeMap<String, Todo> listByPriority(TreeMap<String,Todo> todosMap, String[] commandArgs) {
        try {
            Todo.TodoPriority priority = Todo.TodoPriority.valueOf(commandArgs[0].toUpperCase());
            TreeMap<String, Todo> filteredMap = todosMap.entrySet()
@@ -86,20 +88,23 @@ public class TodoManager {
                            },
                            TreeMap::new));
            if (filteredMap.isEmpty()) {
-               System.out.println("Нет ни одного дела с выбранным параметром");
+               System.out.println("Не найдено ни одного дела с выбранным параметром");
+               return null;
            } else {
                TreeMap<String, Todo> sortedTodos = Util.sortTodosMap(filteredMap);
                sortedTodos.forEach((key, value) -> System.out.println(value.toString()));
+               return sortedTodos;
            }
        } catch (IllegalArgumentException ex) {
            System.out.println("Неправильный аргумент команды (должно быть LOW, MEDIUM или HIGH)");
+           return null;
        }
     }
 
-    public static void listBy(TreeMap<String,Todo> todosMap, String[] commandArgs) {
+    public static TreeMap<String, Todo> listBy(TreeMap<String,Todo> todosMap, String[] commandArgs) {
         if (!(commandArgs[0].equals("true") || commandArgs[0].equals("false"))) {
             System.out.println("Неправильный первый аргумент команды (должно быть true или false)");
-            return;
+            return null;
         }
         boolean isCompleted = Boolean.parseBoolean(commandArgs[0]);
         try {
@@ -116,12 +121,15 @@ public class TodoManager {
                             TreeMap::new));
             if (filteredMap.isEmpty()) {
                 System.out.println("Нет ни одного дела с выбранными параметрами");
+                return null;
             } else {
                 TreeMap<String, Todo> sortedTodos = Util.sortTodosMap(filteredMap);
                 sortedTodos.forEach((key, value) -> System.out.println(value.toString()));
+                return sortedTodos;
             }
         } catch (IllegalArgumentException ex) {
             System.out.println("Неправильный второй аргумент команды (должно быть LOW, MEDIUM или HIGH)");
+            return null;
         }
     }
 
